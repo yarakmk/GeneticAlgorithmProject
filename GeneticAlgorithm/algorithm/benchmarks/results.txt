@@ -1,0 +1,1265 @@
+(base) yarakmk@192 GeneticAlgorithm % python3 main.py
+
+=============================================
+      SAGE: COMPILER FLAG OPTIMIZATION
+=============================================
+
+============================================================
+  Benchmark : gemm
+  Path      : PolyBenchC-4.2.1/linear-algebra/blas/gemm/gemm.c
+============================================================
+
+--- Establishing -O3 Baseline: PolyBenchC-4.2.1/linear-algebra/blas/gemm/gemm.c ---
+  -> Run 01/5: 0.2207s
+  -> Run 02/5: 0.2096s
+  -> Run 03/5: 0.2092s
+  -> Run 04/5: 0.2144s
+  -> Run 05/5: 0.2115s
+Baseline Median (PolyBenchC-4.2.1/linear-algebra/blas/gemm/gemm.c): 0.2115s
+---------------------------------------------------
+
+============================================================
+  Flag Matching Pipeline
+  CFSCA file : CFSCA_flags.txt
+  Benchmark  : PolyBenchC-4.2.1/linear-algebra/blas/gemm/gemm.c
+============================================================
+
+[Load]    7 categories, 58 flags total
+          loops: 13 flags
+          branches: 12 flags
+          functions: 21 flags
+          static_variables: 7 flags
+          pointers: 3 flags
+          strings: 1 flags
+          floats: 1 flags
+
+[Step 1]  Scanning benchmark for code features...
+
+          Detected features:
+          YES  loops
+          YES  branches
+          YES  functions
+          YES  static_variables
+          YES  pointers
+          YES  strings
+          YES  floats
+
+[Step 2]  Filtering by detected features (CFSCA)...
+
+          Before : 58 flags
+          After  : 58 flags
+
+[Step 3]  Applying PDCAT constraints...
+  [STRONG]  Added 'unroll-loops' — required by 'peel-loops'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'peel-loops'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'tree-loop-distribute-patterns'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'peel-loops'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'tree-loop-distribute-patterns'
+
+          Added by constraints : 1
+          + unroll-loops
+          Final total         : 59
+
+============================================================
+  FINAL FLAG LIST (59 flags)
+============================================================
+  caller-saves                                   [CFSCA]
+  cse-follow-jumps                               [CFSCA]
+  defer-pop                                      [CFSCA]
+  devirtualize                                   [CFSCA]
+  devirtualize-speculatively                     [CFSCA]
+  function-cse                                   [CFSCA]
+  guess-branch-probability                       [CFSCA]
+  hoist-adjacent-loads                           [CFSCA]
+  if-conversion                                  [CFSCA]
+  if-conversion2                                 [CFSCA]
+  indirect-inlining                              [CFSCA]
+  inline-functions                               [CFSCA]
+  inline-functions-called-once                   [CFSCA]
+  inline-small-functions                         [CFSCA]
+  ipa-cp-clone                                   [CFSCA]
+  ipa-icf-functions                              [CFSCA]
+  ipa-icf-variables                              [CFSCA]
+  ipa-modref                                     [CFSCA]
+  ipa-profile                                    [CFSCA]
+  ipa-pure-const                                 [CFSCA]
+  ipa-ra                                         [CFSCA]
+  ipa-reference                                  [CFSCA]
+  ipa-reference-addressable                      [CFSCA]
+  ipa-sra                                        [CFSCA]
+  isolate-erroneous-paths-dereference            [CFSCA]
+  loop-interchange                               [CFSCA]
+  loop-unroll-and-jam                            [CFSCA]
+  move-loop-invariants                           [CFSCA]
+  omit-frame-pointer                             [CFSCA]
+  optimize-strlen                                [CFSCA]
+  partial-inlining                               [CFSCA]
+  peel-loops                                     [CFSCA]
+  printf-return-value                            [CFSCA]
+  reorder-blocks                                 [CFSCA]
+  reorder-blocks-and-partition                   [CFSCA]
+  reorder-functions                              [CFSCA]
+  shrink-wrap                                    [CFSCA]
+  signed-zeros                                   [CFSCA]
+  split-loops                                    [CFSCA]
+  split-paths                                    [CFSCA]
+  thread-jumps                                   [CFSCA]
+  toplevel-reorder                               [CFSCA]
+  tree-bit-ccp                                   [CFSCA]
+  tree-builtin-call-dce                          [CFSCA]
+  tree-ccp                                       [CFSCA]
+  tree-ch                                        [CFSCA]
+  tree-coalesce-vars                             [CFSCA]
+  tree-dominator-opts                            [CFSCA]
+  tree-loop-distribute-patterns                  [CFSCA]
+  tree-loop-distribution                         [CFSCA]
+  tree-loop-im                                   [CFSCA]
+  tree-loop-optimize                             [CFSCA]
+  tree-loop-vectorize                            [CFSCA]
+  tree-pta                                       [CFSCA]
+  tree-tail-merge                                [CFSCA]
+  tree-vrp                                       [CFSCA]
+  unroll-loops                                   [PDCAT]
+  unswitch-loops                                 [CFSCA]
+  version-loops-for-strides                      [CFSCA]
+
+  Search space:
+  Original : 58 flags  →  2^58 combinations
+  Final    : 59 flags  →  2^59 combinations
+
+--- Establishing -O3 Baseline: PolyBenchC-4.2.1/linear-algebra/blas/gemm/gemm.c ---
+  -> Run 01/5: 0.2178s
+  -> Run 02/5: 0.2109s
+  -> Run 03/5: 0.2097s
+  -> Run 04/5: 0.2095s
+  -> Run 05/5: 0.2088s
+Baseline Median (PolyBenchC-4.2.1/linear-algebra/blas/gemm/gemm.c): 0.2097s
+---------------------------------------------------
+
+--- Starting Genetic Algorithm Search ---
+Baseline (-O3) : 0.2097s
+Genome Length  : 59 flags
+Benchmark      : PolyBenchC-4.2.1/linear-algebra/blas/gemm/gemm.c
+Genome Length  : 59 flags
+Population Size: 72
+Crossover Type : one_point  (rate=0.3732)
+Mutation Type  : bit_flip  (rate=0.1314)
+Selection Type : linear_ranking
+Elitism Ratio  : 0.259
+Parents Portion: 0.5684
+
+Gen 001/30 | Best: 0.1890s | Avg: 0.4526s | No Improve: 0/16 | Elapsed: 215.91s
+Gen 002/30 | Best: 0.1888s | Avg: 0.3769s | No Improve: 0/16 | Elapsed: 186.29s
+Gen 003/30 | Best: 0.1884s | Avg: 0.3265s | No Improve: 0/16 | Elapsed: 169.34s
+Gen 004/30 | Best: 0.1884s | Avg: 0.3030s | No Improve: 1/16 | Elapsed: 1248.51s
+Gen 005/30 | Best: 0.1878s | Avg: 0.2850s | No Improve: 0/16 | Elapsed: 2317.89s
+Gen 006/30 | Best: 0.1878s | Avg: 0.2837s | No Improve: 1/16 | Elapsed: 1062.84s
+Gen 007/30 | Best: 0.1874s | Avg: 0.2893s | No Improve: 0/16 | Elapsed: 3350.91s
+Gen 008/30 | Best: 0.1874s | Avg: 0.2819s | No Improve: 1/16 | Elapsed: 2313.83s
+Gen 009/30 | Best: 0.1874s | Avg: 0.2869s | No Improve: 2/16 | Elapsed: 2285.36s
+Gen 010/30 | Best: 0.1840s | Avg: 0.2621s | No Improve: 0/16 | Elapsed: 2705.99s
+Gen 011/30 | Best: 0.1840s | Avg: 0.2740s | No Improve: 1/16 | Elapsed: 2703.04s
+Gen 012/30 | Best: 0.1840s | Avg: 0.2845s | No Improve: 2/16 | Elapsed: 2939.96s
+Gen 013/30 | Best: 0.1840s | Avg: 0.2870s | No Improve: 3/16 | Elapsed: 2269.16s
+Gen 014/30 | Best: 0.1840s | Avg: 0.2814s | No Improve: 4/16 | Elapsed: 3045.74s
+Gen 015/30 | Best: 0.1840s | Avg: 0.2743s | No Improve: 5/16 | Elapsed: 1370.24s
+Gen 016/30 | Best: 0.1840s | Avg: 0.2721s | No Improve: 6/16 | Elapsed: 2303.66s
+Gen 017/30 | Best: 0.1840s | Avg: 0.2739s | No Improve: 7/16 | Elapsed: 2180.59s
+Gen 018/30 | Best: 0.1840s | Avg: 0.2957s | No Improve: 8/16 | Elapsed: 281.85s
+Gen 019/30 | Best: 0.1840s | Avg: 0.2740s | No Improve: 9/16 | Elapsed: 151.15s
+Gen 020/30 | Best: 0.1840s | Avg: 0.2921s | No Improve: 10/16 | Elapsed: 159.32s
+Gen 021/30 | Best: 0.1840s | Avg: 0.2920s | No Improve: 11/16 | Elapsed: 157.53s
+Gen 022/30 | Best: 0.1840s | Avg: 0.2884s | No Improve: 12/16 | Elapsed: 1071.91s
+Gen 023/30 | Best: 0.1840s | Avg: 0.2843s | No Improve: 13/16 | Elapsed: 2147.37s
+Gen 024/30 | Best: 0.1840s | Avg: 0.2865s | No Improve: 14/16 | Elapsed: 2536.13s
+Gen 025/30 | Best: 0.1840s | Avg: 0.3168s | No Improve: 15/16 | Elapsed: 170.32s
+Gen 026/30 | Best: 0.1840s | Avg: 0.2973s | No Improve: 16/16 | Elapsed: 159.64s
+
+Early stop: no improvement for 16 generations.
+
+============================================================
+  OPTIMAL FLAG SET FOUND
+  Best fitness : 0.1840s
+============================================================
+
+  Enabled (31 flags):
+    -fdefer-pop
+    -fdevirtualize-speculatively
+    -fhoist-adjacent-loads
+    -fif-conversion
+    -finline-functions-called-once
+    -fipa-cp-clone
+    -fipa-profile
+    -fipa-ra
+    -fipa-reference
+    -fipa-sra
+    -floop-unroll-and-jam
+    -fmove-loop-invariants
+    -fomit-frame-pointer
+    -fpeel-loops
+    -freorder-functions
+    -fshrink-wrap
+    -fsplit-loops
+    -fsplit-paths
+    -ftoplevel-reorder
+    -ftree-bit-ccp
+    -ftree-ccp
+    -ftree-ch
+    -ftree-dominator-opts
+    -ftree-loop-distribute-patterns
+    -ftree-loop-distribution
+    -ftree-loop-im
+    -ftree-loop-optimize
+    -ftree-loop-vectorize
+    -funroll-loops
+    -funswitch-loops
+    -fversion-loops-for-strides
+
+  Disabled (28 flags — explicitly turned off):
+    -fno-caller-saves
+    -fno-cse-follow-jumps
+    -fno-devirtualize
+    -fno-function-cse
+    -fno-guess-branch-probability
+    -fno-if-conversion2
+    -fno-indirect-inlining
+    -fno-inline-functions
+    -fno-inline-small-functions
+    -fno-ipa-icf-functions
+    -fno-ipa-icf-variables
+    -fno-ipa-modref
+    -fno-ipa-pure-const
+    -fno-ipa-reference-addressable
+    -fno-isolate-erroneous-paths-dereference
+    -fno-loop-interchange
+    -fno-optimize-strlen
+    -fno-partial-inlining
+    -fno-printf-return-value
+    -fno-reorder-blocks
+    -fno-reorder-blocks-and-partition
+    -fno-signed-zeros
+    -fno-thread-jumps
+    -fno-tree-builtin-call-dce
+    -fno-tree-coalesce-vars
+    -fno-tree-pta
+    -fno-tree-tail-merge
+    -fno-tree-vrp
+
+  Full GCC command:
+    gcc -O3 -fdefer-pop -fdevirtualize-speculatively -fhoist-adjacent-loads -fif-conversion -finline-functions-called-once -fipa-cp-clone -fipa-profile -fipa-ra -fipa-reference -fipa-sra -floop-unroll-and-jam -fmove-loop-invariants -fomit-frame-pointer -fpeel-loops -freorder-functions -fshrink-wrap -fsplit-loops -fsplit-paths -ftoplevel-reorder -ftree-bit-ccp -ftree-ccp -ftree-ch -ftree-dominator-opts -ftree-loop-distribute-patterns -ftree-loop-distribution -ftree-loop-im -ftree-loop-optimize -ftree-loop-vectorize -funroll-loops -funswitch-loops -fversion-loops-for-strides -fno-caller-saves -fno-cse-follow-jumps -fno-devirtualize -fno-function-cse -fno-guess-branch-probability -fno-if-conversion2 -fno-indirect-inlining -fno-inline-functions -fno-inline-small-functions -fno-ipa-icf-functions -fno-ipa-icf-variables -fno-ipa-modref -fno-ipa-pure-const -fno-ipa-reference-addressable -fno-isolate-erroneous-paths-dereference -fno-loop-interchange -fno-optimize-strlen -fno-partial-inlining -fno-printf-return-value -fno-reorder-blocks -fno-reorder-blocks-and-partition -fno-signed-zeros -fno-thread-jumps -fno-tree-builtin-call-dce -fno-tree-coalesce-vars -fno-tree-pta -fno-tree-tail-merge -fno-tree-vrp
+============================================================
+
+
+  --- Results: gemm ---
+  Baseline (-O3)  : 0.2115s
+  SAGE optimal    : 0.1840s
+  Speedup         : 12.98%
+
+============================================================
+  Benchmark : 2mm
+  Path      : PolyBenchC-4.2.1/linear-algebra/kernels/2mm/2mm.c
+============================================================
+
+--- Establishing -O3 Baseline: PolyBenchC-4.2.1/linear-algebra/kernels/2mm/2mm.c ---
+  -> Run 01/5: 1.8904s
+  -> Run 02/5: 1.8866s
+  -> Run 03/5: 1.8984s
+  -> Run 04/5: 1.8792s
+  -> Run 05/5: 1.8852s
+Baseline Median (PolyBenchC-4.2.1/linear-algebra/kernels/2mm/2mm.c): 1.8866s
+---------------------------------------------------
+
+============================================================
+  Flag Matching Pipeline
+  CFSCA file : CFSCA_flags.txt
+  Benchmark  : PolyBenchC-4.2.1/linear-algebra/kernels/2mm/2mm.c
+============================================================
+
+[Load]    7 categories, 58 flags total
+          loops: 13 flags
+          branches: 12 flags
+          functions: 21 flags
+          static_variables: 7 flags
+          pointers: 3 flags
+          strings: 1 flags
+          floats: 1 flags
+
+[Step 1]  Scanning benchmark for code features...
+
+          Detected features:
+          YES  loops
+          YES  branches
+          YES  functions
+          YES  static_variables
+          YES  pointers
+          YES  strings
+          YES  floats
+
+[Step 2]  Filtering by detected features (CFSCA)...
+
+          Before : 58 flags
+          After  : 58 flags
+
+[Step 3]  Applying PDCAT constraints...
+  [STRONG]  Added 'unroll-loops' — required by 'peel-loops'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'peel-loops'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'tree-loop-distribute-patterns'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'peel-loops'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'tree-loop-distribute-patterns'
+
+          Added by constraints : 1
+          + unroll-loops
+          Final total         : 59
+
+============================================================
+  FINAL FLAG LIST (59 flags)
+============================================================
+  caller-saves                                   [CFSCA]
+  cse-follow-jumps                               [CFSCA]
+  defer-pop                                      [CFSCA]
+  devirtualize                                   [CFSCA]
+  devirtualize-speculatively                     [CFSCA]
+  function-cse                                   [CFSCA]
+  guess-branch-probability                       [CFSCA]
+  hoist-adjacent-loads                           [CFSCA]
+  if-conversion                                  [CFSCA]
+  if-conversion2                                 [CFSCA]
+  indirect-inlining                              [CFSCA]
+  inline-functions                               [CFSCA]
+  inline-functions-called-once                   [CFSCA]
+  inline-small-functions                         [CFSCA]
+  ipa-cp-clone                                   [CFSCA]
+  ipa-icf-functions                              [CFSCA]
+  ipa-icf-variables                              [CFSCA]
+  ipa-modref                                     [CFSCA]
+  ipa-profile                                    [CFSCA]
+  ipa-pure-const                                 [CFSCA]
+  ipa-ra                                         [CFSCA]
+  ipa-reference                                  [CFSCA]
+  ipa-reference-addressable                      [CFSCA]
+  ipa-sra                                        [CFSCA]
+  isolate-erroneous-paths-dereference            [CFSCA]
+  loop-interchange                               [CFSCA]
+  loop-unroll-and-jam                            [CFSCA]
+  move-loop-invariants                           [CFSCA]
+  omit-frame-pointer                             [CFSCA]
+  optimize-strlen                                [CFSCA]
+  partial-inlining                               [CFSCA]
+  peel-loops                                     [CFSCA]
+  printf-return-value                            [CFSCA]
+  reorder-blocks                                 [CFSCA]
+  reorder-blocks-and-partition                   [CFSCA]
+  reorder-functions                              [CFSCA]
+  shrink-wrap                                    [CFSCA]
+  signed-zeros                                   [CFSCA]
+  split-loops                                    [CFSCA]
+  split-paths                                    [CFSCA]
+  thread-jumps                                   [CFSCA]
+  toplevel-reorder                               [CFSCA]
+  tree-bit-ccp                                   [CFSCA]
+  tree-builtin-call-dce                          [CFSCA]
+  tree-ccp                                       [CFSCA]
+  tree-ch                                        [CFSCA]
+  tree-coalesce-vars                             [CFSCA]
+  tree-dominator-opts                            [CFSCA]
+  tree-loop-distribute-patterns                  [CFSCA]
+  tree-loop-distribution                         [CFSCA]
+  tree-loop-im                                   [CFSCA]
+  tree-loop-optimize                             [CFSCA]
+  tree-loop-vectorize                            [CFSCA]
+  tree-pta                                       [CFSCA]
+  tree-tail-merge                                [CFSCA]
+  tree-vrp                                       [CFSCA]
+  unroll-loops                                   [PDCAT]
+  unswitch-loops                                 [CFSCA]
+  version-loops-for-strides                      [CFSCA]
+
+  Search space:
+  Original : 58 flags  →  2^58 combinations
+  Final    : 59 flags  →  2^59 combinations
+
+--- Establishing -O3 Baseline: PolyBenchC-4.2.1/linear-algebra/kernels/2mm/2mm.c ---
+  -> Run 01/5: 1.9352s
+  -> Run 02/5: 1.8851s
+  -> Run 03/5: 1.8871s
+  -> Run 04/5: 1.8861s
+  -> Run 05/5: 1.8820s
+Baseline Median (PolyBenchC-4.2.1/linear-algebra/kernels/2mm/2mm.c): 1.8861s
+---------------------------------------------------
+
+--- Starting Genetic Algorithm Search ---
+Baseline (-O3) : 1.8861s
+Genome Length  : 59 flags
+Benchmark      : PolyBenchC-4.2.1/linear-algebra/kernels/2mm/2mm.c
+Genome Length  : 59 flags
+Population Size: 72
+Crossover Type : one_point  (rate=0.3732)
+Mutation Type  : bit_flip  (rate=0.1314)
+Selection Type : linear_ranking
+Elitism Ratio  : 0.259
+Parents Portion: 0.5684
+
+Gen 001/30 | Best: 1.8797s | Avg: 1.8956s | No Improve: 0/16 | Elapsed: 738.03s
+Gen 002/30 | Best: 1.8390s | Avg: 1.8850s | No Improve: 0/16 | Elapsed: 1723.52s
+Gen 003/30 | Best: 1.8390s | Avg: 1.8905s | No Improve: 1/16 | Elapsed: 770.97s
+Gen 004/30 | Best: 1.8334s | Avg: 1.8688s | No Improve: 0/16 | Elapsed: 2182.68s
+Gen 005/30 | Best: 1.8334s | Avg: 1.8865s | No Improve: 1/16 | Elapsed: 736.09s
+Gen 006/30 | Best: 1.8186s | Avg: 1.8779s | No Improve: 0/16 | Elapsed: 1794.71s
+Gen 007/30 | Best: 1.8186s | Avg: 1.8828s | No Improve: 1/16 | Elapsed: 1683.82s
+Gen 008/30 | Best: 1.8186s | Avg: 1.8745s | No Improve: 2/16 | Elapsed: 1051.87s
+Gen 009/30 | Best: 1.8186s | Avg: 1.8902s | No Improve: 3/16 | Elapsed: 734.80s
+Gen 010/30 | Best: 1.8186s | Avg: 1.8818s | No Improve: 4/16 | Elapsed: 1041.26s
+Gen 011/30 | Best: 1.8186s | Avg: 1.8843s | No Improve: 5/16 | Elapsed: 731.09s
+Gen 012/30 | Best: 1.8186s | Avg: 1.8874s | No Improve: 6/16 | Elapsed: 734.98s
+Gen 013/30 | Best: 1.8186s | Avg: 1.8737s | No Improve: 7/16 | Elapsed: 1521.57s
+Gen 014/30 | Best: 1.8186s | Avg: 1.8615s | No Improve: 8/16 | Elapsed: 3024.64s
+Gen 015/30 | Best: 1.8186s | Avg: 1.8575s | No Improve: 9/16 | Elapsed: 1485.72s
+Gen 016/30 | Best: 1.8186s | Avg: 1.8596s | No Improve: 10/16 | Elapsed: 3214.13s
+Gen 017/30 | Best: 1.8186s | Avg: 1.8586s | No Improve: 11/16 | Elapsed: 723.65s
+Gen 018/30 | Best: 1.8186s | Avg: 1.8622s | No Improve: 12/16 | Elapsed: 2285.24s
+Gen 019/30 | Best: 1.8186s | Avg: 1.8513s | No Improve: 13/16 | Elapsed: 2612.83s
+Gen 020/30 | Best: 1.8186s | Avg: 1.8520s | No Improve: 14/16 | Elapsed: 1239.35s
+Gen 021/30 | Best: 1.8186s | Avg: 1.8424s | No Improve: 15/16 | Elapsed: 3565.34s
+Gen 022/30 | Best: 1.8186s | Avg: 1.8410s | No Improve: 16/16 | Elapsed: 7871.77s
+
+Early stop: no improvement for 16 generations.
+
+============================================================
+  OPTIMAL FLAG SET FOUND
+  Best fitness : 1.8186s
+============================================================
+
+  Enabled (28 flags):
+    -fcse-follow-jumps
+    -fdevirtualize
+    -fguess-branch-probability
+    -finline-functions-called-once
+    -fipa-cp-clone
+    -fipa-ra
+    -fipa-reference
+    -fipa-sra
+    -floop-interchange
+    -floop-unroll-and-jam
+    -fmove-loop-invariants
+    -foptimize-strlen
+    -fpartial-inlining
+    -fprintf-return-value
+    -freorder-blocks
+    -freorder-blocks-and-partition
+    -fsplit-paths
+    -fthread-jumps
+    -ftoplevel-reorder
+    -ftree-builtin-call-dce
+    -ftree-ch
+    -ftree-coalesce-vars
+    -ftree-loop-distribute-patterns
+    -ftree-loop-distribution
+    -ftree-loop-im
+    -ftree-loop-optimize
+    -ftree-loop-vectorize
+    -funswitch-loops
+
+  Disabled (31 flags — explicitly turned off):
+    -fno-caller-saves
+    -fno-defer-pop
+    -fno-devirtualize-speculatively
+    -fno-function-cse
+    -fno-hoist-adjacent-loads
+    -fno-if-conversion
+    -fno-if-conversion2
+    -fno-indirect-inlining
+    -fno-inline-functions
+    -fno-inline-small-functions
+    -fno-ipa-icf-functions
+    -fno-ipa-icf-variables
+    -fno-ipa-modref
+    -fno-ipa-profile
+    -fno-ipa-pure-const
+    -fno-ipa-reference-addressable
+    -fno-isolate-erroneous-paths-dereference
+    -fno-omit-frame-pointer
+    -fno-peel-loops
+    -fno-reorder-functions
+    -fno-shrink-wrap
+    -fno-signed-zeros
+    -fno-split-loops
+    -fno-tree-bit-ccp
+    -fno-tree-ccp
+    -fno-tree-dominator-opts
+    -fno-tree-pta
+    -fno-tree-tail-merge
+    -fno-tree-vrp
+    -fno-unroll-loops
+    -fno-version-loops-for-strides
+
+  Full GCC command:
+    gcc -O3 -fcse-follow-jumps -fdevirtualize -fguess-branch-probability -finline-functions-called-once -fipa-cp-clone -fipa-ra -fipa-reference -fipa-sra -floop-interchange -floop-unroll-and-jam -fmove-loop-invariants -foptimize-strlen -fpartial-inlining -fprintf-return-value -freorder-blocks -freorder-blocks-and-partition -fsplit-paths -fthread-jumps -ftoplevel-reorder -ftree-builtin-call-dce -ftree-ch -ftree-coalesce-vars -ftree-loop-distribute-patterns -ftree-loop-distribution -ftree-loop-im -ftree-loop-optimize -ftree-loop-vectorize -funswitch-loops -fno-caller-saves -fno-defer-pop -fno-devirtualize-speculatively -fno-function-cse -fno-hoist-adjacent-loads -fno-if-conversion -fno-if-conversion2 -fno-indirect-inlining -fno-inline-functions -fno-inline-small-functions -fno-ipa-icf-functions -fno-ipa-icf-variables -fno-ipa-modref -fno-ipa-profile -fno-ipa-pure-const -fno-ipa-reference-addressable -fno-isolate-erroneous-paths-dereference -fno-omit-frame-pointer -fno-peel-loops -fno-reorder-functions -fno-shrink-wrap -fno-signed-zeros -fno-split-loops -fno-tree-bit-ccp -fno-tree-ccp -fno-tree-dominator-opts -fno-tree-pta -fno-tree-tail-merge -fno-tree-vrp -fno-unroll-loops -fno-version-loops-for-strides
+============================================================
+
+
+  --- Results: 2mm ---
+  Baseline (-O3)  : 1.8866s
+  SAGE optimal    : 1.8186s
+  Speedup         : 3.60%
+
+============================================================
+  Benchmark : nussinov
+  Path      : PolyBenchC-4.2.1/medley/nussinov/nussinov.c
+============================================================
+
+--- Establishing -O3 Baseline: PolyBenchC-4.2.1/medley/nussinov/nussinov.c ---
+  -> Run 01/5: 1.3315s
+  -> Run 02/5: 1.3092s
+  -> Run 03/5: 1.2914s
+  -> Run 04/5: 1.2918s
+  -> Run 05/5: 1.2956s
+Baseline Median (PolyBenchC-4.2.1/medley/nussinov/nussinov.c): 1.2956s
+---------------------------------------------------
+
+============================================================
+  Flag Matching Pipeline
+  CFSCA file : CFSCA_flags.txt
+  Benchmark  : PolyBenchC-4.2.1/medley/nussinov/nussinov.c
+============================================================
+
+[Load]    7 categories, 58 flags total
+          loops: 13 flags
+          branches: 12 flags
+          functions: 21 flags
+          static_variables: 7 flags
+          pointers: 3 flags
+          strings: 1 flags
+          floats: 1 flags
+
+[Step 1]  Scanning benchmark for code features...
+
+          Detected features:
+          YES  loops
+          YES  branches
+          YES  functions
+          YES  static_variables
+          YES  pointers
+          YES  strings
+          NO   floats
+
+[Step 2]  Filtering by detected features (CFSCA)...
+  [-] Dropped category 'floats' — feature not detected in source
+
+          Before : 58 flags
+          After  : 57 flags
+
+[Step 3]  Applying PDCAT constraints...
+  [STRONG]  Added 'unroll-loops' — required by 'peel-loops'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'peel-loops'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'tree-loop-distribute-patterns'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'peel-loops'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'tree-loop-distribute-patterns'
+
+          Added by constraints : 1
+          + unroll-loops
+          Final total         : 58
+
+============================================================
+  FINAL FLAG LIST (58 flags)
+============================================================
+  caller-saves                                   [CFSCA]
+  cse-follow-jumps                               [CFSCA]
+  defer-pop                                      [CFSCA]
+  devirtualize                                   [CFSCA]
+  devirtualize-speculatively                     [CFSCA]
+  function-cse                                   [CFSCA]
+  guess-branch-probability                       [CFSCA]
+  hoist-adjacent-loads                           [CFSCA]
+  if-conversion                                  [CFSCA]
+  if-conversion2                                 [CFSCA]
+  indirect-inlining                              [CFSCA]
+  inline-functions                               [CFSCA]
+  inline-functions-called-once                   [CFSCA]
+  inline-small-functions                         [CFSCA]
+  ipa-cp-clone                                   [CFSCA]
+  ipa-icf-functions                              [CFSCA]
+  ipa-icf-variables                              [CFSCA]
+  ipa-modref                                     [CFSCA]
+  ipa-profile                                    [CFSCA]
+  ipa-pure-const                                 [CFSCA]
+  ipa-ra                                         [CFSCA]
+  ipa-reference                                  [CFSCA]
+  ipa-reference-addressable                      [CFSCA]
+  ipa-sra                                        [CFSCA]
+  isolate-erroneous-paths-dereference            [CFSCA]
+  loop-interchange                               [CFSCA]
+  loop-unroll-and-jam                            [CFSCA]
+  move-loop-invariants                           [CFSCA]
+  omit-frame-pointer                             [CFSCA]
+  optimize-strlen                                [CFSCA]
+  partial-inlining                               [CFSCA]
+  peel-loops                                     [CFSCA]
+  printf-return-value                            [CFSCA]
+  reorder-blocks                                 [CFSCA]
+  reorder-blocks-and-partition                   [CFSCA]
+  reorder-functions                              [CFSCA]
+  shrink-wrap                                    [CFSCA]
+  split-loops                                    [CFSCA]
+  split-paths                                    [CFSCA]
+  thread-jumps                                   [CFSCA]
+  toplevel-reorder                               [CFSCA]
+  tree-bit-ccp                                   [CFSCA]
+  tree-builtin-call-dce                          [CFSCA]
+  tree-ccp                                       [CFSCA]
+  tree-ch                                        [CFSCA]
+  tree-coalesce-vars                             [CFSCA]
+  tree-dominator-opts                            [CFSCA]
+  tree-loop-distribute-patterns                  [CFSCA]
+  tree-loop-distribution                         [CFSCA]
+  tree-loop-im                                   [CFSCA]
+  tree-loop-optimize                             [CFSCA]
+  tree-loop-vectorize                            [CFSCA]
+  tree-pta                                       [CFSCA]
+  tree-tail-merge                                [CFSCA]
+  tree-vrp                                       [CFSCA]
+  unroll-loops                                   [PDCAT]
+  unswitch-loops                                 [CFSCA]
+  version-loops-for-strides                      [CFSCA]
+
+  Search space:
+  Original : 58 flags  →  2^58 combinations
+  Final    : 58 flags  →  2^58 combinations
+
+--- Establishing -O3 Baseline: PolyBenchC-4.2.1/medley/nussinov/nussinov.c ---
+  -> Run 01/5: 1.3211s
+  -> Run 02/5: 1.3102s
+  -> Run 03/5: 1.3063s
+  -> Run 04/5: 1.3043s
+  -> Run 05/5: 1.2949s
+Baseline Median (PolyBenchC-4.2.1/medley/nussinov/nussinov.c): 1.3063s
+---------------------------------------------------
+
+--- Starting Genetic Algorithm Search ---
+Baseline (-O3) : 1.3063s
+Genome Length  : 58 flags
+Benchmark      : PolyBenchC-4.2.1/medley/nussinov/nussinov.c
+Genome Length  : 58 flags
+Population Size: 72
+Crossover Type : one_point  (rate=0.3732)
+Mutation Type  : bit_flip  (rate=0.1314)
+Selection Type : linear_ranking
+Elitism Ratio  : 0.259
+Parents Portion: 0.5684
+
+Gen 001/30 | Best: 1.1529s | Avg: 2.0068s | No Improve: 0/16 | Elapsed: 3362.64s
+Gen 002/30 | Best: 1.1404s | Avg: 1.6608s | No Improve: 0/16 | Elapsed: 6092.91s
+Gen 003/30 | Best: 1.1326s | Avg: 1.4645s | No Improve: 0/16 | Elapsed: 7885.16s
+Gen 004/30 | Best: 1.1326s | Avg: 1.2505s | No Improve: 1/16 | Elapsed: 8275.43s
+Gen 005/30 | Best: 1.1309s | Avg: 1.2688s | No Improve: 0/16 | Elapsed: 9367.12s
+Gen 006/30 | Best: 1.1309s | Avg: 1.3350s | No Improve: 1/16 | Elapsed: 5735.72s
+Gen 007/30 | Best: 1.1309s | Avg: 1.3394s | No Improve: 2/16 | Elapsed: 1610.42s
+Gen 008/30 | Best: 1.1309s | Avg: 1.2572s | No Improve: 3/16 | Elapsed: 2710.20s
+Gen 009/30 | Best: 1.1309s | Avg: 1.2554s | No Improve: 4/16 | Elapsed: 3068.66s
+Gen 010/30 | Best: 1.1309s | Avg: 1.3723s | No Improve: 5/16 | Elapsed: 2908.92s
+Gen 011/30 | Best: 1.1309s | Avg: 1.3744s | No Improve: 6/16 | Elapsed: 1381.95s
+Gen 012/30 | Best: 1.1309s | Avg: 1.2569s | No Improve: 7/16 | Elapsed: 3168.90s
+Gen 013/30 | Best: 1.1302s | Avg: 1.2846s | No Improve: 0/16 | Elapsed: 3587.17s
+Gen 014/30 | Best: 1.1302s | Avg: 1.2892s | No Improve: 1/16 | Elapsed: 3173.23s
+Gen 015/30 | Best: 1.1302s | Avg: 1.3359s | No Improve: 2/16 | Elapsed: 1913.29s
+Gen 016/30 | Best: 1.1302s | Avg: 1.3427s | No Improve: 3/16 | Elapsed: 538.80s
+Gen 017/30 | Best: 1.1302s | Avg: 1.3402s | No Improve: 4/16 | Elapsed: 1081.13s
+Gen 018/30 | Best: 1.1302s | Avg: 1.3017s | No Improve: 5/16 | Elapsed: 2881.35s
+Gen 019/30 | Best: 1.1237s | Avg: 1.2940s | No Improve: 0/16 | Elapsed: 1207.73s
+Gen 020/30 | Best: 1.1237s | Avg: 1.2957s | No Improve: 1/16 | Elapsed: 2490.06s
+Gen 021/30 | Best: 1.1237s | Avg: 1.2343s | No Improve: 2/16 | Elapsed: 5625.01s
+Gen 022/30 | Best: 1.1237s | Avg: 1.2262s | No Improve: 3/16 | Elapsed: 2959.39s
+Gen 023/30 | Best: 1.1237s | Avg: 1.2723s | No Improve: 4/16 | Elapsed: 3357.40s
+Gen 024/30 | Best: 1.1237s | Avg: 1.3099s | No Improve: 5/16 | Elapsed: 3855.31s
+Gen 025/30 | Best: 1.1237s | Avg: 1.2587s | No Improve: 6/16 | Elapsed: 4787.03s
+Gen 026/30 | Best: 1.1237s | Avg: 1.2094s | No Improve: 7/16 | Elapsed: 6178.79s
+Gen 027/30 | Best: 1.1237s | Avg: 1.2368s | No Improve: 8/16 | Elapsed: 5884.78s
+Gen 028/30 | Best: 1.1237s | Avg: 1.1951s | No Improve: 9/16 | Elapsed: 7178.74s
+Gen 029/30 | Best: 1.1237s | Avg: 1.3223s | No Improve: 10/16 | Elapsed: 5077.86s
+Gen 030/30 | Best: 1.1237s | Avg: 1.3139s | No Improve: 11/16 | Elapsed: 565.06s
+
+============================================================
+  OPTIMAL FLAG SET FOUND
+  Best fitness : 1.1237s
+============================================================
+
+  Enabled (36 flags):
+    -fdevirtualize-speculatively
+    -ffunction-cse
+    -fguess-branch-probability
+    -fhoist-adjacent-loads
+    -fif-conversion2
+    -findirect-inlining
+    -finline-small-functions
+    -fipa-cp-clone
+    -fipa-modref
+    -fipa-ra
+    -fipa-reference
+    -fipa-reference-addressable
+    -fipa-sra
+    -fisolate-erroneous-paths-dereference
+    -floop-interchange
+    -fmove-loop-invariants
+    -fpeel-loops
+    -fprintf-return-value
+    -freorder-blocks
+    -freorder-blocks-and-partition
+    -freorder-functions
+    -fshrink-wrap
+    -fsplit-loops
+    -fsplit-paths
+    -fthread-jumps
+    -ftoplevel-reorder
+    -ftree-builtin-call-dce
+    -ftree-ccp
+    -ftree-ch
+    -ftree-coalesce-vars
+    -ftree-loop-distribution
+    -ftree-loop-optimize
+    -ftree-loop-vectorize
+    -ftree-pta
+    -funroll-loops
+    -fversion-loops-for-strides
+
+  Disabled (22 flags — explicitly turned off):
+    -fno-caller-saves
+    -fno-cse-follow-jumps
+    -fno-defer-pop
+    -fno-devirtualize
+    -fno-if-conversion
+    -fno-inline-functions
+    -fno-inline-functions-called-once
+    -fno-ipa-icf-functions
+    -fno-ipa-icf-variables
+    -fno-ipa-profile
+    -fno-ipa-pure-const
+    -fno-loop-unroll-and-jam
+    -fno-omit-frame-pointer
+    -fno-optimize-strlen
+    -fno-partial-inlining
+    -fno-tree-bit-ccp
+    -fno-tree-dominator-opts
+    -fno-tree-loop-distribute-patterns
+    -fno-tree-loop-im
+    -fno-tree-tail-merge
+    -fno-tree-vrp
+    -fno-unswitch-loops
+
+  Full GCC command:
+    gcc -O3 -fdevirtualize-speculatively -ffunction-cse -fguess-branch-probability -fhoist-adjacent-loads -fif-conversion2 -findirect-inlining -finline-small-functions -fipa-cp-clone -fipa-modref -fipa-ra -fipa-reference -fipa-reference-addressable -fipa-sra -fisolate-erroneous-paths-dereference -floop-interchange -fmove-loop-invariants -fpeel-loops -fprintf-return-value -freorder-blocks -freorder-blocks-and-partition -freorder-functions -fshrink-wrap -fsplit-loops -fsplit-paths -fthread-jumps -ftoplevel-reorder -ftree-builtin-call-dce -ftree-ccp -ftree-ch -ftree-coalesce-vars -ftree-loop-distribution -ftree-loop-optimize -ftree-loop-vectorize -ftree-pta -funroll-loops -fversion-loops-for-strides -fno-caller-saves -fno-cse-follow-jumps -fno-defer-pop -fno-devirtualize -fno-if-conversion -fno-inline-functions -fno-inline-functions-called-once -fno-ipa-icf-functions -fno-ipa-icf-variables -fno-ipa-profile -fno-ipa-pure-const -fno-loop-unroll-and-jam -fno-omit-frame-pointer -fno-optimize-strlen -fno-partial-inlining -fno-tree-bit-ccp -fno-tree-dominator-opts -fno-tree-loop-distribute-patterns -fno-tree-loop-im -fno-tree-tail-merge -fno-tree-vrp -fno-unswitch-loops
+============================================================
+
+
+  --- Results: nussinov ---
+  Baseline (-O3)  : 1.2956s
+  SAGE optimal    : 1.1237s
+  Speedup         : 13.27%
+
+============================================================
+  Benchmark : jacobi-2d
+  Path      : PolyBenchC-4.2.1/stencils/jacobi-2d/jacobi-2d.c
+============================================================
+
+--- Establishing -O3 Baseline: PolyBenchC-4.2.1/stencils/jacobi-2d/jacobi-2d.c ---
+  -> Run 01/5: 0.6227s
+  -> Run 02/5: 0.6243s
+  -> Run 03/5: 0.6094s
+  -> Run 04/5: 0.6029s
+  -> Run 05/5: 0.6069s
+Baseline Median (PolyBenchC-4.2.1/stencils/jacobi-2d/jacobi-2d.c): 0.6094s
+---------------------------------------------------
+
+============================================================
+  Flag Matching Pipeline
+  CFSCA file : CFSCA_flags.txt
+  Benchmark  : PolyBenchC-4.2.1/stencils/jacobi-2d/jacobi-2d.c
+============================================================
+
+[Load]    7 categories, 58 flags total
+          loops: 13 flags
+          branches: 12 flags
+          functions: 21 flags
+          static_variables: 7 flags
+          pointers: 3 flags
+          strings: 1 flags
+          floats: 1 flags
+
+[Step 1]  Scanning benchmark for code features...
+
+          Detected features:
+          YES  loops
+          YES  branches
+          YES  functions
+          YES  static_variables
+          YES  pointers
+          YES  strings
+          YES  floats
+
+[Step 2]  Filtering by detected features (CFSCA)...
+
+          Before : 58 flags
+          After  : 58 flags
+
+[Step 3]  Applying PDCAT constraints...
+  [STRONG]  Added 'unroll-loops' — required by 'peel-loops'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'peel-loops'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'tree-loop-distribute-patterns'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'peel-loops'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'tree-loop-distribute-patterns'
+
+          Added by constraints : 1
+          + unroll-loops
+          Final total         : 59
+
+============================================================
+  FINAL FLAG LIST (59 flags)
+============================================================
+  caller-saves                                   [CFSCA]
+  cse-follow-jumps                               [CFSCA]
+  defer-pop                                      [CFSCA]
+  devirtualize                                   [CFSCA]
+  devirtualize-speculatively                     [CFSCA]
+  function-cse                                   [CFSCA]
+  guess-branch-probability                       [CFSCA]
+  hoist-adjacent-loads                           [CFSCA]
+  if-conversion                                  [CFSCA]
+  if-conversion2                                 [CFSCA]
+  indirect-inlining                              [CFSCA]
+  inline-functions                               [CFSCA]
+  inline-functions-called-once                   [CFSCA]
+  inline-small-functions                         [CFSCA]
+  ipa-cp-clone                                   [CFSCA]
+  ipa-icf-functions                              [CFSCA]
+  ipa-icf-variables                              [CFSCA]
+  ipa-modref                                     [CFSCA]
+  ipa-profile                                    [CFSCA]
+  ipa-pure-const                                 [CFSCA]
+  ipa-ra                                         [CFSCA]
+  ipa-reference                                  [CFSCA]
+  ipa-reference-addressable                      [CFSCA]
+  ipa-sra                                        [CFSCA]
+  isolate-erroneous-paths-dereference            [CFSCA]
+  loop-interchange                               [CFSCA]
+  loop-unroll-and-jam                            [CFSCA]
+  move-loop-invariants                           [CFSCA]
+  omit-frame-pointer                             [CFSCA]
+  optimize-strlen                                [CFSCA]
+  partial-inlining                               [CFSCA]
+  peel-loops                                     [CFSCA]
+  printf-return-value                            [CFSCA]
+  reorder-blocks                                 [CFSCA]
+  reorder-blocks-and-partition                   [CFSCA]
+  reorder-functions                              [CFSCA]
+  shrink-wrap                                    [CFSCA]
+  signed-zeros                                   [CFSCA]
+  split-loops                                    [CFSCA]
+  split-paths                                    [CFSCA]
+  thread-jumps                                   [CFSCA]
+  toplevel-reorder                               [CFSCA]
+  tree-bit-ccp                                   [CFSCA]
+  tree-builtin-call-dce                          [CFSCA]
+  tree-ccp                                       [CFSCA]
+  tree-ch                                        [CFSCA]
+  tree-coalesce-vars                             [CFSCA]
+  tree-dominator-opts                            [CFSCA]
+  tree-loop-distribute-patterns                  [CFSCA]
+  tree-loop-distribution                         [CFSCA]
+  tree-loop-im                                   [CFSCA]
+  tree-loop-optimize                             [CFSCA]
+  tree-loop-vectorize                            [CFSCA]
+  tree-pta                                       [CFSCA]
+  tree-tail-merge                                [CFSCA]
+  tree-vrp                                       [CFSCA]
+  unroll-loops                                   [PDCAT]
+  unswitch-loops                                 [CFSCA]
+  version-loops-for-strides                      [CFSCA]
+
+  Search space:
+  Original : 58 flags  →  2^58 combinations
+  Final    : 59 flags  →  2^59 combinations
+
+--- Establishing -O3 Baseline: PolyBenchC-4.2.1/stencils/jacobi-2d/jacobi-2d.c ---
+  -> Run 01/5: 0.6088s
+  -> Run 02/5: 0.6095s
+  -> Run 03/5: 0.6044s
+  -> Run 04/5: 0.6132s
+  -> Run 05/5: 0.6041s
+Baseline Median (PolyBenchC-4.2.1/stencils/jacobi-2d/jacobi-2d.c): 0.6088s
+---------------------------------------------------
+
+--- Starting Genetic Algorithm Search ---
+Baseline (-O3) : 0.6088s
+Genome Length  : 59 flags
+Benchmark      : PolyBenchC-4.2.1/stencils/jacobi-2d/jacobi-2d.c
+Genome Length  : 59 flags
+Population Size: 72
+Crossover Type : one_point  (rate=0.3732)
+Mutation Type  : bit_flip  (rate=0.1314)
+Selection Type : linear_ranking
+Elitism Ratio  : 0.259
+Parents Portion: 0.5684
+
+Gen 001/30 | Best: 0.6058s | Avg: 1.0575s | No Improve: 0/16 | Elapsed: 435.22s
+Gen 002/30 | Best: 0.5938s | Avg: 0.9744s | No Improve: 0/16 | Elapsed: 5115.97s
+Gen 003/30 | Best: 0.5915s | Avg: 0.9092s | No Improve: 0/16 | Elapsed: 4327.72s
+Gen 004/30 | Best: 0.5811s | Avg: 0.8481s | No Improve: 0/16 | Elapsed: 1733.94s
+Gen 005/30 | Best: 0.5811s | Avg: 0.8102s | No Improve: 1/16 | Elapsed: 3627.05s
+Gen 006/30 | Best: 0.5811s | Avg: 0.7498s | No Improve: 2/16 | Elapsed: 2012.58s
+Gen 007/30 | Best: 0.5811s | Avg: 0.7943s | No Improve: 3/16 | Elapsed: 659.39s
+Gen 008/30 | Best: 0.5808s | Avg: 0.7760s | No Improve: 0/16 | Elapsed: 3904.57s
+Gen 009/30 | Best: 0.5808s | Avg: 0.7521s | No Improve: 1/16 | Elapsed: 722.86s
+Gen 010/30 | Best: 0.5808s | Avg: 0.7375s | No Improve: 2/16 | Elapsed: 3154.36s
+Gen 011/30 | Best: 0.5808s | Avg: 0.7441s | No Improve: 3/16 | Elapsed: 4110.14s
+Gen 012/30 | Best: 0.5808s | Avg: 0.8189s | No Improve: 4/16 | Elapsed: 4134.95s
+Gen 013/30 | Best: 0.5808s | Avg: 0.7442s | No Improve: 5/16 | Elapsed: 2528.95s
+Gen 014/30 | Best: 0.5808s | Avg: 0.7119s | No Improve: 6/16 | Elapsed: 310.32s
+Gen 015/30 | Best: 0.5808s | Avg: 0.7155s | No Improve: 7/16 | Elapsed: 310.84s
+Gen 016/30 | Best: 0.5808s | Avg: 0.7199s | No Improve: 8/16 | Elapsed: 318.07s
+Gen 017/30 | Best: 0.5808s | Avg: 0.7746s | No Improve: 9/16 | Elapsed: 2127.72s
+Gen 018/30 | Best: 0.5808s | Avg: 0.7706s | No Improve: 10/16 | Elapsed: 331.32s
+Gen 019/30 | Best: 0.5808s | Avg: 0.7785s | No Improve: 11/16 | Elapsed: 2002.51s
+Gen 020/30 | Best: 0.5808s | Avg: 0.7358s | No Improve: 12/16 | Elapsed: 318.10s
+Gen 021/30 | Best: 0.5808s | Avg: 0.7928s | No Improve: 13/16 | Elapsed: 339.24s
+Gen 022/30 | Best: 0.5808s | Avg: 0.7848s | No Improve: 14/16 | Elapsed: 3274.20s
+Gen 023/30 | Best: 0.5808s | Avg: 0.7558s | No Improve: 15/16 | Elapsed: 325.33s
+Gen 024/30 | Best: 0.5808s | Avg: 0.7709s | No Improve: 16/16 | Elapsed: 832.67s
+
+Early stop: no improvement for 16 generations.
+
+============================================================
+  OPTIMAL FLAG SET FOUND
+  Best fitness : 0.5808s
+============================================================
+
+  Enabled (30 flags):
+    -fcaller-saves
+    -fdefer-pop
+    -fdevirtualize
+    -fdevirtualize-speculatively
+    -finline-functions
+    -finline-functions-called-once
+    -fipa-icf-functions
+    -fipa-profile
+    -fipa-ra
+    -fipa-reference
+    -fisolate-erroneous-paths-dereference
+    -floop-unroll-and-jam
+    -fmove-loop-invariants
+    -fpartial-inlining
+    -fprintf-return-value
+    -freorder-blocks
+    -freorder-blocks-and-partition
+    -fshrink-wrap
+    -fsigned-zeros
+    -ftoplevel-reorder
+    -ftree-bit-ccp
+    -ftree-ch
+    -ftree-coalesce-vars
+    -ftree-loop-distribute-patterns
+    -ftree-loop-distribution
+    -ftree-loop-im
+    -ftree-loop-optimize
+    -ftree-loop-vectorize
+    -ftree-pta
+    -funswitch-loops
+
+  Disabled (29 flags — explicitly turned off):
+    -fno-cse-follow-jumps
+    -fno-function-cse
+    -fno-guess-branch-probability
+    -fno-hoist-adjacent-loads
+    -fno-if-conversion
+    -fno-if-conversion2
+    -fno-indirect-inlining
+    -fno-inline-small-functions
+    -fno-ipa-cp-clone
+    -fno-ipa-icf-variables
+    -fno-ipa-modref
+    -fno-ipa-pure-const
+    -fno-ipa-reference-addressable
+    -fno-ipa-sra
+    -fno-loop-interchange
+    -fno-omit-frame-pointer
+    -fno-optimize-strlen
+    -fno-peel-loops
+    -fno-reorder-functions
+    -fno-split-loops
+    -fno-split-paths
+    -fno-thread-jumps
+    -fno-tree-builtin-call-dce
+    -fno-tree-ccp
+    -fno-tree-dominator-opts
+    -fno-tree-tail-merge
+    -fno-tree-vrp
+    -fno-unroll-loops
+    -fno-version-loops-for-strides
+
+  Full GCC command:
+    gcc -O3 -fcaller-saves -fdefer-pop -fdevirtualize -fdevirtualize-speculatively -finline-functions -finline-functions-called-once -fipa-icf-functions -fipa-profile -fipa-ra -fipa-reference -fisolate-erroneous-paths-dereference -floop-unroll-and-jam -fmove-loop-invariants -fpartial-inlining -fprintf-return-value -freorder-blocks -freorder-blocks-and-partition -fshrink-wrap -fsigned-zeros -ftoplevel-reorder -ftree-bit-ccp -ftree-ch -ftree-coalesce-vars -ftree-loop-distribute-patterns -ftree-loop-distribution -ftree-loop-im -ftree-loop-optimize -ftree-loop-vectorize -ftree-pta -funswitch-loops -fno-cse-follow-jumps -fno-function-cse -fno-guess-branch-probability -fno-hoist-adjacent-loads -fno-if-conversion -fno-if-conversion2 -fno-indirect-inlining -fno-inline-small-functions -fno-ipa-cp-clone -fno-ipa-icf-variables -fno-ipa-modref -fno-ipa-pure-const -fno-ipa-reference-addressable -fno-ipa-sra -fno-loop-interchange -fno-omit-frame-pointer -fno-optimize-strlen -fno-peel-loops -fno-reorder-functions -fno-split-loops -fno-split-paths -fno-thread-jumps -fno-tree-builtin-call-dce -fno-tree-ccp -fno-tree-dominator-opts -fno-tree-tail-merge -fno-tree-vrp -fno-unroll-loops -fno-version-loops-for-strides
+============================================================
+
+
+  --- Results: jacobi-2d ---
+  Baseline (-O3)  : 0.6094s
+  SAGE optimal    : 0.5808s
+  Speedup         : 4.69%
+
+============================================================
+  Benchmark : ludcmp
+  Path      : PolyBenchC-4.2.1/linear-algebra/solvers/ludcmp/ludcmp.c
+============================================================
+
+--- Establishing -O3 Baseline: PolyBenchC-4.2.1/linear-algebra/solvers/ludcmp/ludcmp.c ---
+  -> Run 01/5: 2.8470s
+  -> Run 02/5: 2.8521s
+  -> Run 03/5: 2.8519s
+  -> Run 04/5: 2.8588s
+  -> Run 05/5: 2.9003s
+Baseline Median (PolyBenchC-4.2.1/linear-algebra/solvers/ludcmp/ludcmp.c): 2.8521s
+---------------------------------------------------
+
+============================================================
+  Flag Matching Pipeline
+  CFSCA file : CFSCA_flags.txt
+  Benchmark  : PolyBenchC-4.2.1/linear-algebra/solvers/ludcmp/ludcmp.c
+============================================================
+
+[Load]    7 categories, 58 flags total
+          loops: 13 flags
+          branches: 12 flags
+          functions: 21 flags
+          static_variables: 7 flags
+          pointers: 3 flags
+          strings: 1 flags
+          floats: 1 flags
+
+[Step 1]  Scanning benchmark for code features...
+
+          Detected features:
+          YES  loops
+          YES  branches
+          YES  functions
+          YES  static_variables
+          YES  pointers
+          YES  strings
+          YES  floats
+
+[Step 2]  Filtering by detected features (CFSCA)...
+
+          Before : 58 flags
+          After  : 58 flags
+
+[Step 3]  Applying PDCAT constraints...
+  [STRONG]  Added 'unroll-loops' — required by 'peel-loops'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'peel-loops'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'tree-loop-distribute-patterns'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'peel-loops'
+  [WEAK]    Skipped 'auto-profile' (excluded) — companion of 'tree-loop-distribute-patterns'
+
+          Added by constraints : 1
+          + unroll-loops
+          Final total         : 59
+
+============================================================
+  FINAL FLAG LIST (59 flags)
+============================================================
+  caller-saves                                   [CFSCA]
+  cse-follow-jumps                               [CFSCA]
+  defer-pop                                      [CFSCA]
+  devirtualize                                   [CFSCA]
+  devirtualize-speculatively                     [CFSCA]
+  function-cse                                   [CFSCA]
+  guess-branch-probability                       [CFSCA]
+  hoist-adjacent-loads                           [CFSCA]
+  if-conversion                                  [CFSCA]
+  if-conversion2                                 [CFSCA]
+  indirect-inlining                              [CFSCA]
+  inline-functions                               [CFSCA]
+  inline-functions-called-once                   [CFSCA]
+  inline-small-functions                         [CFSCA]
+  ipa-cp-clone                                   [CFSCA]
+  ipa-icf-functions                              [CFSCA]
+  ipa-icf-variables                              [CFSCA]
+  ipa-modref                                     [CFSCA]
+  ipa-profile                                    [CFSCA]
+  ipa-pure-const                                 [CFSCA]
+  ipa-ra                                         [CFSCA]
+  ipa-reference                                  [CFSCA]
+  ipa-reference-addressable                      [CFSCA]
+  ipa-sra                                        [CFSCA]
+  isolate-erroneous-paths-dereference            [CFSCA]
+  loop-interchange                               [CFSCA]
+  loop-unroll-and-jam                            [CFSCA]
+  move-loop-invariants                           [CFSCA]
+  omit-frame-pointer                             [CFSCA]
+  optimize-strlen                                [CFSCA]
+  partial-inlining                               [CFSCA]
+  peel-loops                                     [CFSCA]
+  printf-return-value                            [CFSCA]
+  reorder-blocks                                 [CFSCA]
+  reorder-blocks-and-partition                   [CFSCA]
+  reorder-functions                              [CFSCA]
+  shrink-wrap                                    [CFSCA]
+  signed-zeros                                   [CFSCA]
+  split-loops                                    [CFSCA]
+  split-paths                                    [CFSCA]
+  thread-jumps                                   [CFSCA]
+  toplevel-reorder                               [CFSCA]
+  tree-bit-ccp                                   [CFSCA]
+  tree-builtin-call-dce                          [CFSCA]
+  tree-ccp                                       [CFSCA]
+  tree-ch                                        [CFSCA]
+  tree-coalesce-vars                             [CFSCA]
+  tree-dominator-opts                            [CFSCA]
+  tree-loop-distribute-patterns                  [CFSCA]
+  tree-loop-distribution                         [CFSCA]
+  tree-loop-im                                   [CFSCA]
+  tree-loop-optimize                             [CFSCA]
+  tree-loop-vectorize                            [CFSCA]
+  tree-pta                                       [CFSCA]
+  tree-tail-merge                                [CFSCA]
+  tree-vrp                                       [CFSCA]
+  unroll-loops                                   [PDCAT]
+  unswitch-loops                                 [CFSCA]
+  version-loops-for-strides                      [CFSCA]
+
+  Search space:
+  Original : 58 flags  →  2^58 combinations
+  Final    : 59 flags  →  2^59 combinations
+
+--- Establishing -O3 Baseline: PolyBenchC-4.2.1/linear-algebra/solvers/ludcmp/ludcmp.c ---
+  -> Run 01/5: 2.9235s
+  -> Run 02/5: 2.8309s
+  -> Run 03/5: 2.8316s
+  -> Run 04/5: 2.8510s
+  -> Run 05/5: 2.8462s
+Baseline Median (PolyBenchC-4.2.1/linear-algebra/solvers/ludcmp/ludcmp.c): 2.8462s
+---------------------------------------------------
+
+--- Starting Genetic Algorithm Search ---
+Baseline (-O3) : 2.8462s
+Genome Length  : 59 flags
+Benchmark      : PolyBenchC-4.2.1/linear-algebra/solvers/ludcmp/ludcmp.c
+Genome Length  : 59 flags
+Population Size: 72
+Crossover Type : one_point  (rate=0.3732)
+Mutation Type  : bit_flip  (rate=0.1314)
+Selection Type : linear_ranking
+Elitism Ratio  : 0.259
+Parents Portion: 0.5684
+
+Gen 001/30 | Best: 2.7178s | Avg: 2.7946s | No Improve: 0/16 | Elapsed: 2353.83s
+Gen 002/30 | Best: 2.7167s | Avg: 2.8229s | No Improve: 0/16 | Elapsed: 4360.70s
+Gen 003/30 | Best: 2.6981s | Avg: 2.7635s | No Improve: 0/16 | Elapsed: 13192.38s
+Gen 004/30 | Best: 2.6981s | Avg: 2.7918s | No Improve: 1/16 | Elapsed: 4543.17s
+Gen 005/30 | Best: 2.6981s | Avg: 2.7687s | No Improve: 2/16 | Elapsed: 7475.94s
+Gen 006/30 | Best: 2.6789s | Avg: 2.7640s | No Improve: 0/16 | Elapsed: 7707.29s
+Gen 007/30 | Best: 2.6714s | Avg: 2.7695s | No Improve: 0/16 | Elapsed: 5893.85s
+Gen 008/30 | Best: 2.6714s | Avg: 2.7596s | No Improve: 1/16 | Elapsed: 7952.45s
+Gen 009/30 | Best: 2.6714s | Avg: 2.7408s | No Improve: 2/16 | Elapsed: 7187.56s
+Gen 010/30 | Best: 2.6714s | Avg: 2.7376s | No Improve: 3/16 | Elapsed: 12705.24s
+Gen 011/30 | Best: 2.6714s | Avg: 2.7481s | No Improve: 4/16 | Elapsed: 12609.83s
+Gen 012/30 | Best: 2.6714s | Avg: 2.7722s | No Improve: 5/16 | Elapsed: 6297.47s
+Gen 013/30 | Best: 2.6714s | Avg: 2.7391s | No Improve: 6/16 | Elapsed: 16761.12s
+Gen 014/30 | Best: 2.6714s | Avg: 2.7296s | No Improve: 7/16 | Elapsed: 17550.78s
+Gen 015/30 | Best: 2.6714s | Avg: 2.7579s | No Improve: 8/16 | Elapsed: 7871.87s
+Gen 016/30 | Best: 2.6714s | Avg: 2.7383s | No Improve: 9/16 | Elapsed: 11478.59s
+Gen 017/30 | Best: 2.6714s | Avg: 2.7734s | No Improve: 10/16 | Elapsed: 6982.56s
+Gen 018/30 | Best: 2.6714s | Avg: 2.7583s | No Improve: 11/16 | Elapsed: 11119.98s
+Gen 019/30 | Best: 2.6714s | Avg: 2.7537s | No Improve: 12/16 | Elapsed: 10310.64s
+Gen 020/30 | Best: 2.6714s | Avg: 2.7530s | No Improve: 13/16 | Elapsed: 13986.77s
+Gen 021/30 | Best: 2.6714s | Avg: 2.7257s | No Improve: 14/16 | Elapsed: 17594.47s
+Gen 022/30 | Best: 2.6714s | Avg: 2.7380s | No Improve: 15/16 | Elapsed: 11155.09s
+Gen 023/30 | Best: 2.6714s | Avg: 2.7329s | No Improve: 16/16 | Elapsed: 15084.04s
+
+Early stop: no improvement for 16 generations.
+
+============================================================
+  OPTIMAL FLAG SET FOUND
+  Best fitness : 2.6714s
+============================================================
+
+  Enabled (27 flags):
+    -fcse-follow-jumps
+    -fdefer-pop
+    -ffunction-cse
+    -fif-conversion
+    -fipa-icf-functions
+    -fipa-icf-variables
+    -fipa-modref
+    -fipa-reference
+    -fisolate-erroneous-paths-dereference
+    -floop-interchange
+    -floop-unroll-and-jam
+    -fmove-loop-invariants
+    -fpartial-inlining
+    -freorder-blocks
+    -fshrink-wrap
+    -fsigned-zeros
+    -fthread-jumps
+    -ftoplevel-reorder
+    -ftree-bit-ccp
+    -ftree-ch
+    -ftree-coalesce-vars
+    -ftree-loop-distribution
+    -ftree-loop-optimize
+    -ftree-loop-vectorize
+    -funroll-loops
+    -funswitch-loops
+    -fversion-loops-for-strides
+
+  Disabled (32 flags — explicitly turned off):
+    -fno-caller-saves
+    -fno-devirtualize
+    -fno-devirtualize-speculatively
+    -fno-guess-branch-probability
+    -fno-hoist-adjacent-loads
+    -fno-if-conversion2
+    -fno-indirect-inlining
+    -fno-inline-functions
+    -fno-inline-functions-called-once
+    -fno-inline-small-functions
+    -fno-ipa-cp-clone
+    -fno-ipa-profile
+    -fno-ipa-pure-const
+    -fno-ipa-ra
+    -fno-ipa-reference-addressable
+    -fno-ipa-sra
+    -fno-omit-frame-pointer
+    -fno-optimize-strlen
+    -fno-peel-loops
+    -fno-printf-return-value
+    -fno-reorder-blocks-and-partition
+    -fno-reorder-functions
+    -fno-split-loops
+    -fno-split-paths
+    -fno-tree-builtin-call-dce
+    -fno-tree-ccp
+    -fno-tree-dominator-opts
+    -fno-tree-loop-distribute-patterns
+    -fno-tree-loop-im
+    -fno-tree-pta
+    -fno-tree-tail-merge
+    -fno-tree-vrp
+
+  Full GCC command:
+    gcc -O3 -fcse-follow-jumps -fdefer-pop -ffunction-cse -fif-conversion -fipa-icf-functions -fipa-icf-variables -fipa-modref -fipa-reference -fisolate-erroneous-paths-dereference -floop-interchange -floop-unroll-and-jam -fmove-loop-invariants -fpartial-inlining -freorder-blocks -fshrink-wrap -fsigned-zeros -fthread-jumps -ftoplevel-reorder -ftree-bit-ccp -ftree-ch -ftree-coalesce-vars -ftree-loop-distribution -ftree-loop-optimize -ftree-loop-vectorize -funroll-loops -funswitch-loops -fversion-loops-for-strides -fno-caller-saves -fno-devirtualize -fno-devirtualize-speculatively -fno-guess-branch-probability -fno-hoist-adjacent-loads -fno-if-conversion2 -fno-indirect-inlining -fno-inline-functions -fno-inline-functions-called-once -fno-inline-small-functions -fno-ipa-cp-clone -fno-ipa-profile -fno-ipa-pure-const -fno-ipa-ra -fno-ipa-reference-addressable -fno-ipa-sra -fno-omit-frame-pointer -fno-optimize-strlen -fno-peel-loops -fno-printf-return-value -fno-reorder-blocks-and-partition -fno-reorder-functions -fno-split-loops -fno-split-paths -fno-tree-builtin-call-dce -fno-tree-ccp -fno-tree-dominator-opts -fno-tree-loop-distribute-patterns -fno-tree-loop-im -fno-tree-pta -fno-tree-tail-merge -fno-tree-vrp
+============================================================
+
+
+  --- Results: ludcmp ---
+  Baseline (-O3)  : 2.8521s
+  SAGE optimal    : 2.6714s
+  Speedup         : 6.34%
+
+============================================================
+  FINAL SUMMARY
+  Total experiment time: 478517.06s
+============================================================
+  Benchmark         Baseline         GA    Speedup
+  -----------------------------------------------
+  gemm               0.2115s    0.1840s     12.98%
+  2mm                1.8866s    1.8186s      3.60%
+  nussinov           1.2956s    1.1237s     13.27%
+  jacobi-2d          0.6094s    0.5808s      4.69%
+  ludcmp             2.8521s    2.6714s      6.34%
+============================================================

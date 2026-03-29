@@ -1,0 +1,71 @@
+# loops
+loop-interchange
+loop-unroll-and-jam
+peel-loops
+split-loops
+unswitch-loops
+move-loop-invariants
+tree-loop-distribute-patterns
+tree-loop-distribution
+tree-loop-im
+tree-loop-optimize
+tree-loop-vectorize
+version-loops-for-strides
+split-paths
+
+# branches
+thread-jumps
+if-conversion
+if-conversion2
+hoist-adjacent-loads
+printf-return-value
+tree-tail-merge
+guess-branch-probability
+cse-follow-jumps
+tree-dominator-opts
+reorder-blocks
+reorder-blocks-and-partition
+tree-ch
+
+# functions
+ipa-sra
+tree-pta
+tree-builtin-call-dce
+shrink-wrap
+reorder-functions
+caller-saves
+defer-pop
+devirtualize
+devirtualize-speculatively
+function-cse
+indirect-inlining
+inline-functions
+inline-functions-called-once
+inline-small-functions
+ipa-cp-clone
+ipa-icf-functions
+ipa-modref
+ipa-profile
+ipa-pure-const
+ipa-ra
+partial-inlining
+
+# static_variables
+ipa-reference
+ipa-reference-addressable
+toplevel-reorder
+ipa-icf-variables
+tree-bit-ccp
+tree-ccp
+tree-coalesce-vars
+
+# pointers
+isolate-erroneous-paths-dereference
+omit-frame-pointer
+tree-vrp
+
+# strings
+optimize-strlen
+
+# floats
+signed-zeros
