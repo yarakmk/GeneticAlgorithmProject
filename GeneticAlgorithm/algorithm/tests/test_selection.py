@@ -136,11 +136,12 @@ class TestSelectionRanking:
         """With extreme fitness differences the best individual should dominate."""
         scores = [0.001, 100.0, 100.0, 100.0, 100.0, 100.0]
         counts = {tuple(c): 0 for c in population}
-        for _ in range(200):
+        for _ in range(1000):
             selected = ga.selection_ranking(population, scores, 1)
             counts[tuple(selected[0])] += 1
-        best = tuple(population[0])  # index 0 has score 0.001 (best)
-        assert counts[best] > counts[tuple(population[1])]
+        best = tuple(population[0])   # weight 6/21 ≈ 29%, expected ~286
+        worst = tuple(population[-1]) # weight 1/21 ≈  5%, expected ~48
+        assert counts[best] > counts[worst]
 
 
 # ---------------------------------------------------------------------------

@@ -2,7 +2,7 @@ import opentuner
 from opentuner import ConfigurationManipulator
 from opentuner.search.manipulator import IntegerParameter, FloatParameter, EnumParameter
 from opentuner.measurement import MeasurementInterface
-import algorithm.geneticAlgorithm as ga  # ← import your GA as a module
+import geneticAlgorithm as ga  # ← import your GA as a module
 
 TUNING_BENCHMARK = 'PolyBenchC-4.2.1/linear-algebra/blas/gemm/gemm.c'
 TUNING_POLYBENCH = True

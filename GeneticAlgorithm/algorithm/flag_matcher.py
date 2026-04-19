@@ -81,56 +81,137 @@ EXCLUDED_FLAGS = {
 # STEP 1 — SCAN BENCHMARK SOURCE FOR CODE FEATURES
 # =============================================================================
 
-FEATURE_PATTERNS = {
-    'loops': [
-        r'\b(for|while|do)\s*[\(\{]',
-    ],
-    'branches': [
-        r'\b(if|else\s+if|switch)\s*\(',
-    ],
-    'functions': [
-        r'\w[\w\s\*]+\s+\w+\s*\([^)]*\)\s*\{',
-        r'\b\w+\s*\([^)]*\)\s*;',
-    ],
-    'static_variables': [
-        r'\b(static|extern)\s+\w',
-        r'^[A-Za-z_]\w*\s+\w+\s*[=;]',
-    ],
-    'pointers': [
-        r'(\*\s*\w+|\w+\s*->\s*\w+)',
-        r'\w+\s*\*\s*\w+\s*[=;]',
-    ],
-    'strings': [
-        r'\b(printf|fprintf|sprintf|strlen|strcpy|strcat|strcmp|puts)\s*\(',
-        r'"[^"]*"',
-    ],
-    'floats': [
-        r'\b(float|double|long\s+double)\b',
-        r'\d+\.\d+([eE][+-]?\d+)?[fFlL]?',
-    ],
-}
+# FEATURE_PATTERNS = {
+#     'loops': [
+#         r'\b(for|while|do)\s*[\(\{]',
+#     ],
+#     'branches': [
+#         r'\b(if|else\s+if|switch)\s*\(',
+#     ],
+#     'functions': [
+#         r'\w[\w\s\*]+\s+\w+\s*\([^)]*\)\s*\{',
+#         r'\b\w+\s*\([^)]*\)\s*;',
+#     ],
+#     'static_variables': [
+#         r'\b(static|extern)\s+\w',
+#         r'^[A-Za-z_]\w*\s+\w+\s*[=;]',
+#     ],
+#     'pointers': [
+#         r'(\*\s*\w+|\w+\s*->\s*\w+)',
+#         r'\w+\s*\*\s*\w+\s*[=;]',
+#     ],
+#     'strings': [
+#         r'\b(printf|fprintf|sprintf|strlen|strcpy|strcat|strcmp|puts)\s*\(',
+#         r'"[^"]*"',
+#     ],
+#     'floats': [
+#         r'\b(float|double|long\s+double)\b',
+#         r'\d+\.\d+([eE][+-]?\d+)?[fFlL]?',
+#     ],
+# }
 
+
+# def scan_benchmark(source_file: str) -> dict:
+#     """
+#     Detects which code features are present in the benchmark source.
+#     Returns {category: bool}.
+#     """
+#     with open(source_file, 'r', errors='ignore') as f:
+#         code = f.read()
+
+#     # Strip comments to avoid false positives
+#     code = re.sub(r'//.*?$',    '', code, flags=re.MULTILINE)
+#     code = re.sub(r'/\*.*?\*/', '', code, flags=re.DOTALL)
+
+#     return {
+#         category: any(
+#             re.search(pattern, code, flags=re.MULTILINE)
+#             for pattern in patterns
+#         )
+#         for category, patterns in FEATURE_PATTERNS.items()
+#     }
 
 def scan_benchmark(source_file: str) -> dict:
-    """
-    Detects which code features are present in the benchmark source.
-    Returns {category: bool}.
-    """
     with open(source_file, 'r', errors='ignore') as f:
         code = f.read()
 
-    # Strip comments to avoid false positives
-    code = re.sub(r'//.*?$',    '', code, flags=re.MULTILINE)
+    # Strip comments
+    code = re.sub(r'//.*?$', '', code, flags=re.MULTILINE)
     code = re.sub(r'/\*.*?\*/', '', code, flags=re.DOTALL)
 
     return {
-        category: any(
-            re.search(pattern, code, flags=re.MULTILINE)
-            for pattern in patterns
-        )
-        for category, patterns in FEATURE_PATTERNS.items()
+        'loops':            _contain_loop(code),
+        'branches':         _contain_branch(code),
+        'functions':        len(_contain_function(code)) > 0,
+        'static_variables': _contain_static_variable(code),
+        'pointers':         _contain_pointer(code),
+        'strings':          _contain_string(code),
+        'floats':           _contain_float(code),
     }
 
+
+def _contain_loop(code):
+    for_pattern      = r'for\s*\(([^)]+)\)\s*\{?'
+    while_pattern    = r'while\s*\(([^)]+)\)\s*\{?'
+    do_while_pattern = r'do\s*\{?[^}]*\}\s*while\s*\(([^)]+)\)'
+    matches = (re.findall(for_pattern, code) +
+               re.findall(while_pattern, code) +
+               re.findall(do_while_pattern, code))
+    return len(set(matches)) > 0
+
+
+def _contain_branch(code):
+    pattern = r'if\s*\(.*?\)|else\s*if\s*\(.*?\)|else|switch\s*\(.*?\)'
+    return len(re.findall(pattern, code)) > 0
+
+
+def _contain_function(code):
+    """
+    Only fires if a function is both called AND declared in the file,
+    excluding main and type keywords — matching CFSCA logic.
+    """
+    call_pattern = r'\b\w+\s*\([^)]*\)'
+    decl_pattern = r'\b\w+\s+\w+\s*\([^)]*\)'
+
+    calls = re.findall(call_pattern, code)
+    decls = re.findall(decl_pattern, code)
+
+    EXCLUDED = {'main', 'int', 'float', 'double', 'string',
+                'long', 'void', 'char', 'unsigned', 'short'}
+
+    call_names = {re.match(r'\b\w+', c).group() for c in calls
+                  if re.match(r'\b\w+', c)}
+    decl_names = set()
+    for d in decls:
+        m = re.match(r'\b\w+\s+(\w+)', d)
+        if m:
+            decl_names.add(m.group(1))
+
+    matched = (call_names & decl_names) - EXCLUDED
+    return list(matched)
+
+
+def _contain_static_variable(code):
+    pattern = r'\bstatic\s+\w+\s+\w+\s*=?\s*[^;]*'
+    return len(re.findall(pattern, code)) > 0
+
+
+def _contain_pointer(code):
+    # Only explicit pointer declarations: type *varname;
+    pattern = r'\b([_a-zA-Z][_a-zA-Z0-9]*\s+\*+\s*[_a-zA-Z][_a-zA-Z0-9]*\s*);'
+    matches = list(set(re.findall(pattern, code)))
+    return len(matches) > 0
+
+
+def _contain_string(code):
+    # Only str* family functions — not printf/scanf
+    pattern = r'\b(str(?:len|cpy|ncpy|cat|ncat|cmp|ncmp|chr|rchr|str|tok|dup))\b'
+    return len(re.findall(pattern, code)) > 0
+
+
+def _contain_float(code):
+    pattern = r'[-+]?[0-9]*\.[0-9]+([eE][-+]?[0-9]+)?'
+    return len(re.findall(pattern, code)) > 0
 
 # =============================================================================
 # STEP 2 — CFSCA FILTER
@@ -302,4 +383,5 @@ def build_flag_list(cfsca_filepath: str, benchmark_filepath: str) -> list:
 #     print(f"\nSaved to filtered_flags.txt")
 
 if __name__ == '__main__':
-    flags = build_flag_list('CFSCA_flags.txt', 'algorithm/benchmarks/simple_loop.c')
+        # flags = build_flag_list('CFSCA_flags.txt', 'algorithm/benchmarks/simple_loop.c')
+    flags = build_flag_list('CFSCA_flags.txt', 'PolyBenchC-4.2.1/linear-algebra/blas/gemm/gemm.c')

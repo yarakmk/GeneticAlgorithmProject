@@ -4,30 +4,30 @@ import time
 import math
 
 # Import the fitness function from the robust Test Harness script
-from algorithm.test_harness import get_fitness_score, get_baseline_runtime
+from test_harness import get_fitness_score, get_baseline_runtime
 
 # Import the flag matching pipeline
-from algorithm.flag_matcher import build_flag_list
+from flag_matcher import build_flag_list
 
 CFSCA_FLAGS_FILE = 'CFSCA_flags.txt'
 
 # --- GA PARAMETERS (To be tuned by OpenTuner) ---
-POPULATION_SIZE = 72
-MAX_GENERATIONS = 30
-CROSSOVER_RATE = 0.3732
-MUTATION_RATE = 0.1314
-ELITISM_RATIO = 0.259         # Top X% of population carried over unchanged each generation
-PARENTS_PORTION = 0.5684        # Proportion of population selected as parents for breeding
-MAX_NO_IMPROVEMENT = 16       # MIWI: stop if no improvement after this many generations
+POPULATION_SIZE = 64
+MAX_GENERATIONS = 33
+CROSSOVER_RATE = 0.4711
+MUTATION_RATE = 0.1868
+ELITISM_RATIO = 0.2998         # Top X% of population carried over unchanged each generation
+PARENTS_PORTION = 0.5527        # Proportion of population selected as parents for breeding
+MAX_NO_IMPROVEMENT = 25       # MIWI: stop if no improvement after this many generations
 
 # --- OPERATOR SELECTION (swap these strings to change strategy) ---
 # Crossover options : 'one_point' | 'two_point' | 'uniform' | 'shuffle' | 'segment'
 CROSSOVER_TYPE = 'one_point'
 # Mutation options  : 'bit_flip' | 'gauss_by_center' | 'uniform_mutation'
-MUTATION_TYPE = 'bit_flip'
+MUTATION_TYPE = 'gauss_by_center'
 # Selection options : 'fully_random' | 'roulette' | 'stochastic' | 'sigma_scaling'
 #                     'ranking' | 'linear_ranking' | 'tournament'
-SELECTION_TYPE = 'linear_ranking'
+SELECTION_TYPE = 'ranking'
 TOURNAMENT_SIZE = 5            # Only used when SELECTION_TYPE = 'tournament'
 # --- END GA PARAMETERS ---
 
@@ -261,8 +261,8 @@ def selection_roulette(population, fitness_scores, n):
     Risk: one very fast individual can dominate the wheel (low diversity).
     """
     # Invert so lower runtime = higher selection weight
-    max_score = max(fitness_scores)
-    inverted = [max_score - s + 1e-6 for s in fitness_scores]
+    max_score = max((s for s in fitness_scores if s != float('inf')), default=0)
+    inverted = [max_score - s + 1e-6 if s != float('inf') else 0.0 for s in fitness_scores]
     total = sum(inverted)
     if total == 0:
         # All scores are inf — fall back to random selection
