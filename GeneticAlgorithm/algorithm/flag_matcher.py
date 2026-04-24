@@ -77,60 +77,6 @@ EXCLUDED_FLAGS = {
 }
 
 
-# =============================================================================
-# STEP 1 — SCAN BENCHMARK SOURCE FOR CODE FEATURES
-# =============================================================================
-
-# FEATURE_PATTERNS = {
-#     'loops': [
-#         r'\b(for|while|do)\s*[\(\{]',
-#     ],
-#     'branches': [
-#         r'\b(if|else\s+if|switch)\s*\(',
-#     ],
-#     'functions': [
-#         r'\w[\w\s\*]+\s+\w+\s*\([^)]*\)\s*\{',
-#         r'\b\w+\s*\([^)]*\)\s*;',
-#     ],
-#     'static_variables': [
-#         r'\b(static|extern)\s+\w',
-#         r'^[A-Za-z_]\w*\s+\w+\s*[=;]',
-#     ],
-#     'pointers': [
-#         r'(\*\s*\w+|\w+\s*->\s*\w+)',
-#         r'\w+\s*\*\s*\w+\s*[=;]',
-#     ],
-#     'strings': [
-#         r'\b(printf|fprintf|sprintf|strlen|strcpy|strcat|strcmp|puts)\s*\(',
-#         r'"[^"]*"',
-#     ],
-#     'floats': [
-#         r'\b(float|double|long\s+double)\b',
-#         r'\d+\.\d+([eE][+-]?\d+)?[fFlL]?',
-#     ],
-# }
-
-
-# def scan_benchmark(source_file: str) -> dict:
-#     """
-#     Detects which code features are present in the benchmark source.
-#     Returns {category: bool}.
-#     """
-#     with open(source_file, 'r', errors='ignore') as f:
-#         code = f.read()
-
-#     # Strip comments to avoid false positives
-#     code = re.sub(r'//.*?$',    '', code, flags=re.MULTILINE)
-#     code = re.sub(r'/\*.*?\*/', '', code, flags=re.DOTALL)
-
-#     return {
-#         category: any(
-#             re.search(pattern, code, flags=re.MULTILINE)
-#             for pattern in patterns
-#         )
-#         for category, patterns in FEATURE_PATTERNS.items()
-#     }
-
 def scan_benchmark(source_file: str) -> dict:
     with open(source_file, 'r', errors='ignore') as f:
         code = f.read()
@@ -179,7 +125,11 @@ def _contain_function(code):
     EXCLUDED = {'main', 'int', 'float', 'double', 'string',
                 'long', 'void', 'char', 'unsigned', 'short'}
 
-    call_names = {re.match(r'\b\w+', c).group() for c in calls
+    # Exclude call matches that are embedded inside a declaration (e.g. compute(int x)
+    # inside "int compute(int x)") — those are declarations, not real call sites.
+    decl_texts = set(decls)
+    pure_calls = [c for c in calls if not any(c in d for d in decl_texts)]
+    call_names = {re.match(r'\b\w+', c).group() for c in pure_calls
                   if re.match(r'\b\w+', c)}
     decl_names = set()
     for d in decls:
@@ -371,17 +321,4 @@ def build_flag_list(cfsca_filepath: str, benchmark_filepath: str) -> list:
 # =============================================================================
 
 # if __name__ == '__main__':
-#     final_flags = build_flag_list(
-#         cfsca_filepath='CFSCA_flags.txt',
-#         benchmark_filepath='benchmarks/montecarlo.cpp',
-#     )
-
-#     with open('filtered_flags.txt', 'w') as f:
-#         for flag in final_flags:
-#             f.write(flag + '\n')
-
-#     print(f"\nSaved to filtered_flags.txt")
-
-if __name__ == '__main__':
-        # flags = build_flag_list('CFSCA_flags.txt', 'algorithm/benchmarks/simple_loop.c')
-    flags = build_flag_list('CFSCA_flags.txt', 'PolyBenchC-4.2.1/linear-algebra/blas/gemm/gemm.c')
+#     flags = build_flag_list('CFSCA_flags.txt', 'PolyBenchC-4.2.1/linear-algebra/blas/gemm/gemm.c')

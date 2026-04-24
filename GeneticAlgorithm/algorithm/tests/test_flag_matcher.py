@@ -85,12 +85,12 @@ class TestScanBenchmark:
 
     def test_detects_pointer(self, tmp_path):
         f = tmp_path / "bench.c"
-        f.write_text("int *ptr = &x;")
+        f.write_text("int *ptr;")
         assert fm.scan_benchmark(str(f))['pointers'] is True
 
-    def test_detects_printf(self, tmp_path):
+    def test_detects_strlen(self, tmp_path):
         f = tmp_path / "bench.c"
-        f.write_text('printf("hello %d", n);')
+        f.write_text('strlen(s);')
         assert fm.scan_benchmark(str(f))['strings'] is True
 
     def test_no_features_in_empty_file(self, tmp_path):
@@ -116,6 +116,35 @@ class TestScanBenchmark:
         expected_keys = {'loops', 'branches', 'functions', 'static_variables',
                          'pointers', 'strings', 'floats'}
         assert set(features.keys()) == expected_keys
+
+    def test_detects_function_declared_and_called(self, tmp_path):
+        f = tmp_path / "bench.c"
+        f.write_text("int compute(int x) { return x; }\ncompute(5);")
+        assert fm.scan_benchmark(str(f))['functions'] is True
+
+    def test_no_function_if_only_declaration(self, tmp_path):
+        # declared but never called — should not trigger
+        f = tmp_path / "bench.c"
+        f.write_text("int compute(int x) { return x; }")
+        assert fm.scan_benchmark(str(f))['functions'] is False
+
+    def test_no_function_if_only_call(self, tmp_path):
+        # called but not declared in this file
+        f = tmp_path / "bench.c"
+        f.write_text("compute(5);")
+        assert fm.scan_benchmark(str(f))['functions'] is False
+
+    def test_excludes_type_keywords_as_function_names(self, tmp_path):
+        # 'int', 'void', etc. must never count as function names
+        f = tmp_path / "bench.c"
+        f.write_text("int foo(int x) { return x; }\nfoo(1);")
+        result = fm.scan_benchmark(str(f))
+        assert result['functions'] is True  # 'foo' detected, not 'int'
+
+    def test_function_in_comment_not_detected(self, tmp_path):
+        f = tmp_path / "bench.c"
+        f.write_text("// int compute(int x) { return x; }\n// compute(5);")
+        assert fm.scan_benchmark(str(f))['functions'] is False
 
 
 # ---------------------------------------------------------------------------

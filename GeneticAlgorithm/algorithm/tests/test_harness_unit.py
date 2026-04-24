@@ -130,19 +130,6 @@ class TestRunProgramAndTime:
 # ---------------------------------------------------------------------------
 
 class TestGetFitnessScore:
-    # def _make_mocks(self, compile_ok=True, run_time=0.2):
-    #     """Return a pair of patches that simulate successful compile + run."""
-    #     compile_patch = patch(
-    #         'algorithm.test_harness.compile_program',
-    #         return_value=compile_ok
-    #     )
-    #     run_patch = patch(
-    #         'algorithm.test_harness.run_program_and_time',
-    #         return_value=run_time
-    #     )
-    #     exists_patch = patch('algorithm.test_harness.os.path.exists', return_value=True)
-    #     remove_patch = patch('algorithm.test_harness.os.remove')
-    #     return compile_patch, run_patch, exists_patch, remove_patch
 
     def test_returns_median_of_runs(self):
         times = [0.1, 0.2, 0.3, 0.4, 0.5]

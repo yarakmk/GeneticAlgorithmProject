@@ -1,0 +1,13 @@
+{
+    "population_size": 64,
+    "crossover_type": "one_point",
+    "crossover_rate": 0.4711,
+    "mutation_type": "gauss_by_center",
+    "mutation_rate": 0.1868,
+    "selection_type": "ranking",
+    "elitism_ratio": 0.2998,
+    "parents_portion": 0.5527,
+    "max_generations": 33,
+    "max_no_improvement": 25,
+    "random_seed": null
+}

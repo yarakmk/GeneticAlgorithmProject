@@ -2,35 +2,36 @@ import random
 import statistics
 import time
 import math
+from algorithm.test_harness import get_fitness_score, get_baseline_runtime
+from algorithm.flag_matcher import build_flag_list
 
-# Import the fitness function from the robust Test Harness script
-from test_harness import get_fitness_score, get_baseline_runtime
+import json
+import os
+CONFIG_FILE = 'config.json'
 
-# Import the flag matching pipeline
-from flag_matcher import build_flag_list
+def load_config():
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, 'r') as f:
+            return json.load(f)
+    return {}
+
+# Load config at module level
+_config = load_config()
+
+POPULATION_SIZE    = _config.get('population_size',    64)
+CROSSOVER_TYPE     = _config.get('crossover_type',     'one_point')
+CROSSOVER_RATE     = _config.get('crossover_rate',     0.4711)
+MUTATION_TYPE      = _config.get('mutation_type',      'gauss_by_center')
+MUTATION_RATE      = _config.get('mutation_rate',      0.1868)
+SELECTION_TYPE     = _config.get('selection_type',     'ranking')
+ELITISM_RATIO      = _config.get('elitism_ratio',      0.2998)
+PARENTS_PORTION    = _config.get('parents_portion',    0.5527)
+MAX_GENERATIONS    = _config.get('max_generations',    33)
+MAX_NO_IMPROVEMENT = _config.get('max_no_improvement', 25)
+RANDOM_SEED        = _config.get('random_seed',        None)
+TOURNAMENT_SIZE = 5            # Only used when SELECTION_TYPE = 'tournament'
 
 CFSCA_FLAGS_FILE = 'CFSCA_flags.txt'
-
-# --- GA PARAMETERS (To be tuned by OpenTuner) ---
-POPULATION_SIZE = 64
-MAX_GENERATIONS = 33
-CROSSOVER_RATE = 0.4711
-MUTATION_RATE = 0.1868
-ELITISM_RATIO = 0.2998         # Top X% of population carried over unchanged each generation
-PARENTS_PORTION = 0.5527        # Proportion of population selected as parents for breeding
-MAX_NO_IMPROVEMENT = 25       # MIWI: stop if no improvement after this many generations
-
-# --- OPERATOR SELECTION (swap these strings to change strategy) ---
-# Crossover options : 'one_point' | 'two_point' | 'uniform' | 'shuffle' | 'segment'
-CROSSOVER_TYPE = 'one_point'
-# Mutation options  : 'bit_flip' | 'gauss_by_center' | 'uniform_mutation'
-MUTATION_TYPE = 'gauss_by_center'
-# Selection options : 'fully_random' | 'roulette' | 'stochastic' | 'sigma_scaling'
-#                     'ranking' | 'linear_ranking' | 'tournament'
-SELECTION_TYPE = 'ranking'
-TOURNAMENT_SIZE = 5            # Only used when SELECTION_TYPE = 'tournament'
-# --- END GA PARAMETERS ---
-
 
 # =============================================================================
 # CROSSOVER OPERATORS
@@ -125,7 +126,7 @@ def crossover_shuffle(parent_a, parent_b):
 
 def crossover_segment(parent_a, parent_b):
     """
-    Segment-Based Crossover (used by FOGA — found to give best diversity).
+    Segment-Based Crossover.
     Picks multiple random segments from each parent alternately to form children.
     Provides higher gene diversity than standard point-based crossover.
 
@@ -184,7 +185,7 @@ def crossover(parent_a, parent_b):
 
 def mutate_bit_flip(chromosome):
     """
-    Bit-Flip Mutation (your original method).
+    Bit-Flip Mutation.
     Each gene independently has a MUTATION_RATE chance of flipping 0->1 or 1->0.
     Simple and effective for binary chromosomes.
     """
@@ -194,7 +195,7 @@ def mutate_bit_flip(chromosome):
 
 def mutate_gauss_by_center(chromosome):
     """
-    Gauss-by-Center Mutation (used by FOGA — their best-performing mutation).
+    Gauss-by-Center Mutation.
     Adds a value drawn from a normal distribution (mean=0) to each gene,
     then rounds back to binary. Genes near 0 or 1 are less likely to flip
     than bit-flip mutation — it's a 'softer' mutation that preserves
@@ -389,7 +390,7 @@ def selection_linear_ranking(population, fitness_scores, n):
 
 def selection_tournament(population, fitness_scores, n):
     """
-    Tournament Selection (your original method).
+    Tournament Selection.
     Runs n independent mini-tournaments of size TOURNAMENT_SIZE.
     The individual with the lowest runtime in each tournament wins.
     Simple, fast, and tunable via TOURNAMENT_SIZE.
@@ -458,6 +459,9 @@ def run_genetic_algorithm(benchmark_path, polybench=False, extra_sources=None, e
     and applying CFSCA feature matching + PDCAT dependency constraints.
     """
 
+    # Seed the RNG so all operators (crossover, mutation, selection, init) are reproducible
+    random.seed(RANDOM_SEED)
+
     # Build the flag list for this specific benchmark
     core_flag_list = build_flag_list(CFSCA_FLAGS_FILE, benchmark_path)
     baseline = get_baseline_runtime(benchmark_path, polybench=polybench,
@@ -474,7 +478,8 @@ def run_genetic_algorithm(benchmark_path, polybench=False, extra_sources=None, e
     print(f"Mutation Type  : {MUTATION_TYPE}  (rate={MUTATION_RATE})")
     print(f"Selection Type : {SELECTION_TYPE}")
     print(f"Elitism Ratio  : {ELITISM_RATIO}")
-    print(f"Parents Portion: {PARENTS_PORTION}\n")
+    print(f"Parents Portion: {PARENTS_PORTION}")
+    print(f"Random Seed    : {RANDOM_SEED if RANDOM_SEED is not None else 'None (non-deterministic)'}\n")
 
     genome_length = len(core_flag_list)
     population = initialize_population(genome_length)
@@ -580,11 +585,11 @@ def run_genetic_algorithm(benchmark_path, polybench=False, extra_sources=None, e
         "best_flags": enabled_flags,
         "log": log
     }
-if __name__ == '__main__':
-    import sys
-    if len(sys.argv) < 2:
-        print("Usage: python genetic_algorithm.py <benchmark_path>")
-        print("Example: python genetic_algorithm.py benchmarks/montecarlo.cpp")
-        sys.exit(1)
 
-    result = run_genetic_algorithm(sys.argv[1])
+# if __name__ == '__main__':
+#     import sys
+#     if len(sys.argv) < 2:
+#         print("Usage: python genetic_algorithm.py <benchmark_path>")
+#         sys.exit(1)
+
+#     result = run_genetic_algorithm(sys.argv[1])

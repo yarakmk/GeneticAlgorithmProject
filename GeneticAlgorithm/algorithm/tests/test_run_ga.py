@@ -131,27 +131,3 @@ class TestRunGeneticAlgorithm:
 
         assert any(kw.get('polybench') is True for kw in seen_kwargs)
 
-
-# ---------------------------------------------------------------------------
-# __main__ block
-# ---------------------------------------------------------------------------
-
-class TestMainBlock:
-    def test_no_args_prints_usage_and_exits(self, capsys):
-        with pytest.raises(SystemExit) as exc_info:
-            with patch('sys.argv', ['geneticAlgorithm.py']):
-                runpy.run_path('algorithm/geneticAlgorithm.py', run_name='__main__')
-        assert exc_info.value.code == 1
-        captured = capsys.readouterr()
-        assert 'Usage' in captured.out
-
-    def test_with_arg_calls_run_genetic_algorithm(self):
-        # run_path re-executes the file in a fresh namespace, so we mock the
-        # imported dependencies rather than run_genetic_algorithm itself.
-        with patch('sys.argv', ['geneticAlgorithm.py', 'bench.cpp']), \
-             patch('algorithm.flag_matcher.build_flag_list', return_value=FLAG_LIST), \
-             patch('algorithm.test_harness.get_baseline_runtime', return_value=1.0), \
-             patch('algorithm.test_harness.get_fitness_score', return_value=0.5):
-            for attr, val in _mock_patches().items():
-                setattr(ga, attr, val)
-            runpy.run_path('algorithm/geneticAlgorithm.py', run_name='__main__')

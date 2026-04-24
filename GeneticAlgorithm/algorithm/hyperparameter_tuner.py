@@ -63,6 +63,6 @@ class GAHyperparamTuner(MeasurementInterface):
         )
         return opentuner.resultsdb.models.Result(time=result['best_fitness'])
 
-if __name__ == '__main__':
-    args = opentuner.default_argparser().parse_args()
-    GAHyperparamTuner.main(args)
+# if __name__ == '__main__':
+#     args = opentuner.default_argparser().parse_args()
+#     GAHyperparamTuner.main(args)
