@@ -1,5 +1,6 @@
 {
-    "benchmark_path": "PolyBenchC-4.2.1/linear-algebra/blas/gemm/gemm.c",
+    "benchmark_path": "algorithm/benchmarks/matmul.cpp",
+    "compiler": "g++-15",
     "population_size": 64,
     "crossover_type": "one_point",
     "crossover_rate": 0.471,
