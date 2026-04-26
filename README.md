@@ -25,24 +25,8 @@ Ensure the following are installed:
   ```bash
   pip install opentuner
 
-  ---
+---
 
-## Project Structure
-GeneticAlgorithmProject/
-├── main.py                   # Entry point
-├── config.json               # GA configuration file
-├── flag_matcher.py           # CFSCA + PDCAT search space reduction
-├── genetic_algorithm.py      # GA operators and main loop
-├── test_harness.py           # Compilation and fitness evaluation
-├── hyperparameter_tuner.py   # OpenTuner-based hyperparameter tuning
-└── tests/
-├── test_flag_matcher.py
-├── test_selection.py
-├── test_crossover.py
-├── test_mutation.py
-├── test_run_ga.py
-├── test_harness_unit.py
-└── test_hyperparameter_tuner.py
 ## Configuration
 
 All GA settings are specified in `config.json` in the 
@@ -81,7 +65,9 @@ cd GeneticAlgorithmProject
 
 2. Set the target benchmark in `config.json`.
 
-3. Run the optimiser:
+3. Set the compiler commad in `config.json`.
+
+4. Run the optimiser:
 
 ```bash
 python3 main.py
