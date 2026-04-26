@@ -1,7 +1,8 @@
 {
+    "benchmark_path": "PolyBenchC-4.2.1/linear-algebra/blas/gemm/gemm.c",
     "population_size": 64,
     "crossover_type": "one_point",
-    "crossover_rate": 0.4711,
+    "crossover_rate": 0.471,
     "mutation_type": "gauss_by_center",
     "mutation_rate": 0.1868,
     "selection_type": "ranking",
@@ -9,5 +10,6 @@
     "parents_portion": 0.5527,
     "max_generations": 33,
     "max_no_improvement": 25,
-    "random_seed": null
+    "random_seed": null,
+    "n_runs": 5
 }
