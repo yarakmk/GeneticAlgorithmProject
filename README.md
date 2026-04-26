@@ -123,6 +123,8 @@ and may differ slightly across runs due to stochastic
 variation in the GA.
 
 ---
+## Further Details
+For more details on how to configure SAGE, please refer to the User Guide in Appendix B in the report.
 
 ## Platform
 
